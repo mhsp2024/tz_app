@@ -58,7 +58,7 @@ if response and "data" in response:
     )
     
     # Extract the customer name if it exists
-    if "partners.customer.partner.name" in df.columns:
+    if "customer_partner.name" in df.columns:
         df["customer_partner_name"] = df["customer_partner.name"]
     else:
         st.warning("Column 'partners.customer.partner.name' is missing in the DataFrame.")
