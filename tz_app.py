@@ -1,5 +1,5 @@
-import requests
 import pandas as pd
+import requests
 import streamlit as st
 
 # API URL and Token
@@ -22,16 +22,19 @@ def fetch_sales_orders():
     }
     try:
         response = requests.get(API_URL, headers=headers, params=params)
-        response.raise_for_status()  # Raise an exception for HTTP errors
+        response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
         st.error(f"Error fetching sales orders: {e}")
         return None
 
-# Convert API data to a Pandas DataFrame
+# Process data and handle nested JSON
 def process_data_to_dataframe(data):
     try:
-        return pd.json_normalize(data)  # Flatten nested JSON if needed
+        # Normalize JSON to flatten nested fields
+        df = pd.json_normalize(data, record_path=None, meta=['id'], sep='.')
+        st.write("DataFrame Columns:", df.columns.tolist())  # Debugging
+        return df
     except Exception as e:
         st.error(f"Error processing data: {e}")
         return None
@@ -40,39 +43,37 @@ def process_data_to_dataframe(data):
 st.title("Tracezilla Sales Orders Viewer")
 
 # Fetch data
-sales_orders = fetch_sales_orders()
+response = fetch_sales_orders()
 
-if sales_orders:
-    # Convert data to DataFrame
-    df = process_data_to_dataframe(sales_orders)
-
-    if df is not None:
-        st.subheader("Sales Orders Table")
-        st.dataframe(df)  # Display interactive table
-
-        # Add filter for customer partner
-        customers = df['customer_partner.name'].dropna().unique()  # Adjust the field based on API response
-        selected_customer = st.selectbox("Filter by Customer", options=["All"] + list(customers))
-
-        # Apply filter if a specific customer is selected
-        if selected_customer != "All":
-            filtered_df = df[df['customer_partner.name'] == selected_customer]
-        else:
-            filtered_df = df
-
-        # Display filtered data
-        st.write(f"Showing results for: {selected_customer}")
-        st.dataframe(filtered_df)
-
-        # Export to CSV option
-        csv = filtered_df.to_csv(index=False)
-        st.download_button(
-            label="Download CSV",
-            data=csv,
-            file_name="sales_orders.csv",
-            mime="text/csv"
-        )
+if response and "data" in response:
+    data = response["data"]
+    
+    # Normalize and extract nested fields
+    df = pd.json_normalize(
+        data,
+        sep='.',
+        record_path=None,
+        meta=['id'],  # Add metadata columns as needed
+        errors='ignore'
+    )
+    
+    # Extract the customer name if it exists
+    if "partners.customer.partner.name" in df.columns:
+        df["customer_partner_name"] = df["partners.customer.partner.name"]
     else:
-        st.error("Failed to process data into a table.")
+        st.warning("Column 'partners.customer.partner.name' is missing in the DataFrame.")
+    
+    # Display the DataFrame
+    st.subheader("Sales Orders Table")
+    st.dataframe(df)
+    
+    # Allow filtering by customer name
+    if "customer_partner_name" in df.columns:
+        customers = df["customer_partner_name"].dropna().unique()
+        selected_customer = st.selectbox("Filter by Customer", options=["All"] + list(customers))
+        
+        filtered_df = df[df["customer_partner_name"] == selected_customer] if selected_customer != "All" else df
+        st.subheader("Filtered Data")
+        st.dataframe(filtered_df)
 else:
-    st.error("Failed to fetch sales orders.")
+    st.error("No valid data received from the API.")
