@@ -69,12 +69,12 @@ for url in all_urls:
             st.dataframe(df)  # Display interactive table
 
             # Add filter for customer partner or any field (example for filtering 'customer_partner.name')
-            if 'customer_partner.name' in df.columns:
-                customers = df['customer_partner.name'].dropna().unique()
+            if 'name' in df.columns:
+                customers = df['name'].dropna().unique()
                 selected_customer = st.selectbox(f"Filter by Customer for {url}", options=["All"] + list(customers))
 
                 if selected_customer != "All":
-                    filtered_df = df[df['customer_partner.name'] == selected_customer]
+                    filtered_df = df[df['name'] == selected_customer]
                 else:
                     filtered_df = df
                 st.write(f"Showing results for: {selected_customer}")
