@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import os
 
-os.environ['API_TOKEN'] = st.secrets['API_TOKEN']
+os.environ['API_TOKEN'] = st.Secrets['API_TOKEN']
 
 # Headers for the API Request
 headers = {
