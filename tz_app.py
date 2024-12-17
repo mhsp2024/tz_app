@@ -1,7 +1,9 @@
 import requests
 import pandas as pd
 import streamlit as st
+import os
 
+os.environ['API_TOKEN'] = st.secrets['API_TOKEN']
 
 # Headers for the API Request
 headers = {
