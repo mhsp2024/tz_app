@@ -17,7 +17,6 @@ all_urls = [
     'https://app.tracezilla.com/api/v1/wooden-spoon/price-lists/sales',
     'https://app.tracezilla.com/api/v1/wooden-spoon/recipes',
     'https://app.tracezilla.com/api/v1/wooden-spoon/skus',
-    'https://app.tracezilla.com/api/v1/wooden-spoon/orders',
     'https://app.tracezilla.com/api/v1/wooden-spoon/invoices',
     'https://app.tracezilla.com/api/v1/wooden-spoon/partners'
 ]
@@ -94,3 +93,8 @@ for url in all_urls:
             st.error(f"Failed to process data for {url}.")
     else:
         st.error(f"Failed to fetch data from {url}.")
+
+
+
+
+# 'https://app.tracezilla.com/api/v1/wooden-spoon/orders'
