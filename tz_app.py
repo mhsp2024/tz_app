@@ -3,6 +3,8 @@ import pandas as pd
 import streamlit as st
 import os
 
+sys.path.append(os.path.abspath('/path/to/tz_get_data_api'))
+
 ### import datasets :
 from tz_get_data_api import df_recipes
 # df_sku_merged, df_all_recipes_skus, df_order_inbounds_add, df_invoice_com, df_prices_sku, df_sku_prices
