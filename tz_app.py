@@ -179,7 +179,7 @@ elif dataset_name == "Recipes and ingredients":
         # Get unique names
         names = selected_df['recipe_id'].dropna().unique()
         # Add a selectbox to filter by customer
-        selected = st.selectbox("Filter by Recipe name", options=["All"] + list(names))
+        selected = st.selectbox("Filter by Recipe id", options=["All"] + list(names))
         # Filter the dataset based on the selected customer
         if selected != "All":
             filtered_df = selected_df[selected_df['recipe_id'] == selected]
