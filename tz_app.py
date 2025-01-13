@@ -19,7 +19,8 @@ import os
 # website almost impossible
 ### need to find a way to speed up the process of loading data from api
 
-
+########################################
+## get data in a seperate .py file then import datasets
 # Add the path to tz_get_data_api.py
 # sys.path.append(os.path.abspath('/path/to/tz_get_data_api'))
 
@@ -33,12 +34,7 @@ import os
 
 #######################################
 
-# the above part needs to be fixed, now we use sample datasets 
-# to build up the website first
-import pandas as pd
-import streamlit as st
-
-# Generate two example datasets
+# the above part needs to be fixed, now use two datasets to build up the sample website first
 
 # API_TOKEN = st.secrets["API_TOKEN"]
 API_TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI3IiwianRpIjoiMjIyZTM5OGE4YzA5M2M2NmMyNzIwNDFjZTQzNWY2ZDczYzc4YTE4YWE1ZDk2ZmRlYzE3MjJlYjAxMzdkNTJjMDYzYTJkMzUzMGQxYzIxYzQiLCJpYXQiOjE3MTU4MDgwOTguNzM1NzMxLCJuYmYiOjE3MTU4MDgwOTguNzM1NzM0LCJleHAiOjE3NDczNDQwOTguNzMzMzI0LCJzdWIiOiIxNzM2Iiwic2NvcGVzIjpbXX0.vVtqcEP_JPKp6co5rmnZErB7ZGmSSjxpkxdVIdUWGjRHSTUEXHQfZ9nByfagaPCaQa5CGohcROWqU9vBowDOt1m-1xnYx_7N-hzBG7WqVtXTXHSPzeqXkNVXllYuaJ7LS8lFIEotSE3G2iHPz_evdiHHpFmQqsfnU2NL3RgfHtyj_5WRBtEYlTh8tKP-gR-RhRN8b6LDtObKN_nLwpcivpSqTp5Gybxez02mpjbVxjwit6tYWYqAvFUnt2Z_E5ZsCuAFPpayngOsPa-Tupfyuv03Z-ZLl3PRzxWd-udjUj05YacNP0zFXghrnsaE_z1SI2xWhbREyp37y65ZkSGs_UJoTwMTFRTMs322iw8tIB_2LCeBtEh4gmCqQ3YmeMhT9LFU7AAX4DNmPInyCmr3XXe7MDs0Uh2Pv_pxEdaO_awZJi0fZHNrotscSw9VcwWbR_03lBPvzETvtInCNo3yNPyc2z8C-f_q7aV9fPJNBOe7m2DprOpjfZEvy2Oa6B3qav8ImQRRY9gnX1OToH4awLyIaJNsfHGvWbgzqBZUXkEms7YiehqjiSfuGgoNuUiisG5-D8OwVrGc68QhnBK9_EdJYHxFM28AOAgxVfaoqULRNNfrnGvI07E7cPoBb7n83w13w9CvIxgdm2BYfV3rB668oVlkGhusYVNOWVBUgBI"
@@ -128,22 +124,6 @@ for recipe_id in df_recipes['id']:
 
 # Convert the collected data into a DataFrame
 df_all_recipes_skus = pd.DataFrame(all_recipes_data)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
